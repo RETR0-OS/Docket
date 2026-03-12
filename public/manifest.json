@@ -1,9 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Docket",
-  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArhNLdcpAr3tN2Y+LDPOJAhGtSrzRD3UnO4ZDzbIbI2PGNmfYi6zObBaqXlxFEAFTmXpf4MWbxuj3gzHymWr0oCIgM4As76bbUBFmKWppLhg0lD5ZPWH6TOweGXx78aqD/4fA+sHzqBtU8aoTwGc1cutEMyxahTSZCmu529RleUlIJ5lKXZYlFJaxb0NipxSfzvraz1CPFBivj2fp8v6UETbC6HbkKiHGlxS+ARqeWVjA1bPJ+vUOaZI6WePzhwwZqfY1j8tdr3YECUftVcoH2ys4ehcyY5z20IXe8Px6pPbS99XL4v3Vf53rWEyPbt+vlSCWGcgmdkf7+4A90tAiZQIDAQAB",
   "version": "1.0.0",
-  "description": "Type :commands: in any text field to interact with your Google Calendar.",
+  "description": "Type ::commands:: in any text field to interact with your Google Calendar.",
   "permissions": ["identity", "storage"],
   "host_permissions": ["<all_urls>"],
   "oauth2": {

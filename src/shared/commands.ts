@@ -12,8 +12,8 @@ export const COMMANDS: CommandMeta[] = [
   },
   {
     name: 'schedule',
-    hint: '::schedule <type> <title> <YYYY-MM-DD> <HH:MM> <HH:MM>::',
-    template: '::schedule type title YYYY-MM-DD HH:MM HH:MM::',
+    hint: '::schedule <title> <date> <HH:MM> <HH:MM>::',
+    template: '::schedule title YYYY-MM-DD HH:MM HH:MM::',
   },
   {
     name: 'appointments',
@@ -27,8 +27,8 @@ export const COMMANDS: CommandMeta[] = [
   },
   {
     name: 'cancel',
-    hint: '::cancel <name> <YYYY-MM-DD> <HH:MM> <HH:MM>::',
-    template: '::cancel name YYYY-MM-DD HH:MM HH:MM::',
+    hint: '::cancel <date> — pick event from list::',
+    template: '::cancel YYYY-MM-DD::',
   },
 ];
 

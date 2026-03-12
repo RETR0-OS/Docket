@@ -18,6 +18,38 @@ export class ResultOverlay {
     this.render('Error', msg, false);
   }
 
+  showConfirm(title: string, body: string, onConfirm: () => void, onCancel: () => void) {
+    this.hide();
+    const overlay = document.createElement('div');
+    overlay.className = 'cb-overlay';
+    overlay.style.top = '80px';
+    overlay.style.left = '50%';
+    overlay.style.transform = 'translateX(-50%)';
+
+    overlay.innerHTML = `
+      <div class="cb-overlay-header">
+        <span>${escapeHtml(title)}</span>
+        <button class="cb-overlay-close" title="Close">✕</button>
+      </div>
+      <div class="cb-overlay-body"></div>
+      <div class="cb-overlay-footer">
+        <button class="cb-btn cb-btn-secondary" data-action="cancel">Keep it</button>
+        <button class="cb-btn cb-btn-danger" data-action="confirm">Delete</button>
+      </div>
+    `;
+
+    const bodyEl = overlay.querySelector('.cb-overlay-body') as HTMLElement;
+    bodyEl.style.whiteSpace = 'pre-wrap';
+    bodyEl.textContent = body;
+
+    overlay.querySelector('.cb-overlay-close')?.addEventListener('click', () => { onCancel(); this.hide(); });
+    overlay.querySelector('[data-action="cancel"]')?.addEventListener('click', () => { onCancel(); this.hide(); });
+    overlay.querySelector('[data-action="confirm"]')?.addEventListener('click', () => { onConfirm(); this.hide(); });
+
+    this.container = overlay;
+    this.shadow.appendChild(overlay);
+  }
+
   private render(
     title: string,
     body: string,

@@ -109,6 +109,11 @@
   border-color: #d1d5db;
 }
 .cb-btn-secondary:hover { background: #e5e7eb; }
+.cb-btn-danger {
+  background: #dc2626;
+  color: #fff;
+}
+.cb-btn-danger:hover { background: #b91c1c; }
 
 /* Conflict picker */
 .cb-picker-item {
@@ -119,6 +124,7 @@
 }
 .cb-picker-item:last-child { border-bottom: none; }
 .cb-picker-item:hover { background: #eff6ff; }
+.cb-picker-item--selected { background: #dbeafe; }
 .cb-picker-item .ev-title { font-weight: 600; color: #111827; }
 .cb-picker-item .ev-time  { color: #6b7280; font-size: 11px; margin-top: 2px; }
 
@@ -137,3 +143,86 @@
 @keyframes cb-spin {
   to { transform: rotate(360deg); }
 }
+
+/* Date picker */
+.cb-datepicker {
+  position: fixed;
+  z-index: 2147483647;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  padding: 8px;
+  width: 224px;
+  outline: none;
+}
+.cb-dp-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+.cb-dp-title { font-weight: 600; color: #111827; font-size: 13px; }
+.cb-dp-nav {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: #6b7280;
+  padding: 0 4px;
+  line-height: 1;
+}
+.cb-dp-nav:hover { color: #111827; }
+.cb-dp-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  margin-bottom: 4px;
+}
+.cb-dp-weekdays > div {
+  text-align: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  padding: 2px 0;
+}
+.cb-dp-row { display: grid; grid-template-columns: repeat(7, 1fr); }
+.cb-dp-cell {
+  text-align: center;
+  padding: 4px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #374151;
+  font-size: 12px;
+}
+.cb-dp-empty { cursor: default; }
+.cb-dp-cell:not(.cb-dp-empty):hover { background: #eff6ff; }
+.cb-dp-today { font-weight: 700; color: #2563eb; }
+.cb-dp-selected { background: #2563eb !important; color: #fff !important; }
+.cb-dp-focused { outline: 2px solid #93c5fd; outline-offset: -1px; }
+
+/* Time picker */
+.cb-timepicker {
+  position: fixed;
+  z-index: 2147483647;
+  background: #fff;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100px;
+  outline: none;
+}
+.cb-tp-slot {
+  padding: 7px 14px;
+  cursor: pointer;
+  border-bottom: 1px solid #f3f4f6;
+  color: #374151;
+}
+.cb-tp-slot:last-child { border-bottom: none; }
+.cb-tp-slot:hover { background: #eff6ff; }
+.cb-tp-selected { background: #dbeafe; font-weight: 600; }

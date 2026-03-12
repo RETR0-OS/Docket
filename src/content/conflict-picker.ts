@@ -5,6 +5,7 @@ export type PickCallback = (event: GCalEvent) => void;
 export class ConflictPicker {
   private shadow: ShadowRoot;
   private container: HTMLDivElement | null = null;
+  private selectedIndex = 0;
 
   constructor(shadowHost: HTMLElement) {
     this.shadow = shadowHost.shadowRoot!;
@@ -12,23 +13,26 @@ export class ConflictPicker {
 
   show(events: GCalEvent[], title: string, onPick: PickCallback) {
     this.hide();
+    this.selectedIndex = 0;
 
     const overlay = document.createElement('div');
     overlay.className = 'cb-overlay';
     overlay.style.top = '80px';
     overlay.style.left = '50%';
     overlay.style.transform = 'translateX(-50%)';
+    overlay.setAttribute('tabindex', '-1');
 
     const header = document.createElement('div');
     header.className = 'cb-overlay-header';
-    header.innerHTML = `<span>${title}</span><button class="cb-overlay-close">✕</button>`;
+    header.innerHTML = `<span>${escapeHtml(title)}</span><button class="cb-overlay-close">✕</button>`;
     header.querySelector('.cb-overlay-close')?.addEventListener('click', () => this.hide());
 
     overlay.appendChild(header);
 
-    for (const ev of events) {
+    events.forEach((ev, idx) => {
       const item = document.createElement('div');
-      item.className = 'cb-picker-item';
+      item.className = 'cb-picker-item' + (idx === 0 ? ' cb-picker-item--selected' : '');
+      item.dataset['idx'] = String(idx);
       const start = ev.start.dateTime ? formatDateTime(ev.start.dateTime) : (ev.start.date ?? '');
       const end   = ev.end.dateTime   ? formatDateTime(ev.end.dateTime)   : (ev.end.date ?? '');
       item.innerHTML = `
@@ -40,10 +44,37 @@ export class ConflictPicker {
         onPick(ev);
       });
       overlay.appendChild(item);
-    }
+    });
+
+    overlay.addEventListener('keydown', (e: KeyboardEvent) => {
+      e.stopPropagation();
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        this.selectedIndex = Math.min(this.selectedIndex + 1, events.length - 1);
+        this.updateSelection(overlay);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        this.selectedIndex = Math.max(this.selectedIndex - 1, 0);
+        this.updateSelection(overlay);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const ev = events[this.selectedIndex];
+        if (ev) { this.hide(); onPick(ev); }
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        this.hide();
+      }
+    });
 
     this.container = overlay;
     this.shadow.appendChild(overlay);
+    overlay.focus();
+  }
+
+  private updateSelection(overlay: HTMLDivElement) {
+    overlay.querySelectorAll<HTMLElement>('.cb-picker-item').forEach((el, i) => {
+      el.classList.toggle('cb-picker-item--selected', i === this.selectedIndex);
+    });
   }
 
   hide() {
